@@ -1,0 +1,78 @@
+/*
+A reminder of the schema:
+Entities:
+Venue(venue_id   int,
+           city_name     char(50),
+           venue_name      char(50)
+           PRIMARY KEY(venue_id)
+)
+Games(game_id    int,
+            week_number     int,
+            PRIMARY KEY(game_id)
+)
+Teams(team_id    int,
+           team_name     char(50),
+           PRIMARY KEY(team_id)
+)
+Player(player_id     int,
+           position       char(50),
+           player_name     char(50),
+           PRIMARY KEY(player_id)
+)
+
+Stat(stat_id    int,
+       stat_name    char(50),
+       stat_value     double,
+       PRIMARY KEY(stat_id)
+)
+
+
+Relations:
+PlaysFor(player_Id	int
+team_Id	int
+Primary Key(player_Id, team_Id)
+Foreign Key(player_Id references Player)
+Foreign Key(team_Id references Team)
+)
+PlaysIn(   game_Id	int
+venue_Id	int
+homeTeam_Id	int
+awayTeam_Id	int
+Primary Keys(game_Id, venue_Id)
+Foreign Key(game_Id references Game)
+Foreign Key(homeTeam_Id references Team)
+Foreign Key(awayTeam_Id references Team)
+Foreign Key(venue_Id references Venue)
+)
+
+hasStats(stat_Id	int
+player_Id	int
+Primary Keys(stat_Id, player_Id)
+Foreign Key(stat_Id references Stat)
+Foreign Key(player_Id references Player)
+)
+hasTeamStats(stat_Id	int
+team_	int
+Primary Keys(stat_Id, team_Id)
+Foreign Key(stat_Id references Stat)
+Foreign Key(team_Id references Team)
+)
+
+
+*/
+
+INSERT INTO player (player_id, player_name, position)
+VALUES (69, 'Joe Burrow', 'QB');
+
+INSERT INTO stat (stat_id, stat_name, stat_value)
+VALUES (691, 'TDs', 20);
+
+INSERT INTO hasStats (stat_id, player)
+VALUES (691, 69);
+
+SELECT stat_value
+FROM player AS p, stat AS s, hasStats AS h
+WHERE p.player_name = 'Joe Burrow'
+AND p.player_id = h.player
+AND s.stat_id = h.stat_id;
+
